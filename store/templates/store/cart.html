@@ -1,0 +1,45 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <div class ="row mt-5">
+        <div class="col-lg-12">
+            <div class="text-white">
+                <a class="btn btn-outline-primary" href="{% url 'store' %}">&larr;Continue Shopping</a>
+                <table class="table">
+                    <tr>
+                        <th><h5>Items:  <strong>{{ products_count }}</strong></h5></th>
+                        <th><h5>Total:  <strong>&#8377;{{ total_price |floatformat:2 }}</strong></h5></th>
+                        <th><a style="float:right;"  class="btn btn-outline-primary" href="{% url 'checkout' %}">CheckOut</a></th>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <br>
+            <div class="text-white" style="background-color: rgb(18, 4, 108);">
+                <table class="table border table-striped table-dark">
+                    <tr>
+                        <th><strong></strong></th>
+                        <th style="text-align : left"><strong>Item:</strong></th>
+                        <th><strong>Price:</strong></th>
+                        <th><strong>Quantity:</strong></th>
+                        <th><strong>Total:</strong></th>
+                    </tr>
+                    {% for product in products %}
+                        <tr>
+                            <th><img src="{{ product.image }}" height="30px" width="40px"></th>
+                            <th><strong>{{ product.title }}</strong></th>
+                            <th><strong>{{ product.price }}</strong></th>
+
+                            <th>
+                                <p style="display: inline-block;">{{ product.quantity }}</p>
+                                <img data-productid = {{product.product_id}} data-action="add" class="update-cart" style="display: inline-block; cursor :pointer" src="{% static 'images/arrow-up.png' %}" height="10px" width="auto">
+                                <img data-productid = {{product.product_id}} data-action="remove" class="update-cart" style="display: inline-block;   cursor :pointer" src="{% static 'images/arrow-down.png' %}" height="10px" width="auto">
+                            </th>
+                            <th><strong>{{ product.quantity_price }}</strong></th>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

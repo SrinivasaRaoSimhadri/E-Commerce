@@ -1,0 +1,41 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div class="row  p-4">
+    <div class="col-lg">
+        <form class="border p-3" method ="GET" action= "">
+            {% csrf_token %}
+            <input type="text" class="form-control mb-4" placeholder="Name.." name= "name" required> 
+            <input type="email" class="form-control mb-4" placeholder="Email.." name= "email" required> 
+            <p>Shipping information:</p>
+            <input type="text" class="form-control mb-4" placeholder="Address.." name = "address" required> 
+            <input type="text" class="form-control mb-4" placeholder="City.." name= "city" required>
+            <input type="text" class="form-control mb-4" placeholder="State.." name="state" required> 
+            <input type="text" class="form-control mb-4" placeholder="Zip Code.." name="zipcode" required> 
+            <input class="col-12 btn btn-success " type="submit" value="Ship Address">
+            {% if flag %}
+                <small style="color : green">{{flag}}</small>
+            {% endif %}
+            <a class="col-12 btn btn-success mt-3"  href ="{% url "payments" %}">Make payments</a>
+        </form>
+    </div>
+    <div class="col-lg p-4">
+        <a class="btn btn-outline-primary mb-4"  href="{% url 'cart' %}">&larr;Back to Cart</a><br>
+        <strong>Order Summary</strong>
+        <table class="table border mt-4">
+            {% for product in products %}
+                <tr>
+                    <th><img src="{{ product.image }}" height="35px" width="auto"></th>
+                    <th>{{item.product.name}}</th>
+                    <th>&#8377;{{product.price}}</th>
+                    <th>x{{product.quantity}}</th>
+                    <th>&#8377;{{product.quantity_price}}</th>
+                </tr>
+            {% endfor %}
+        </table>
+        <strong>Items: {{ products_count }}</strong><hr>
+        <strong>Total: &#8377;{{ total_price |floatformat:2 }}</strong><hr>
+    </div>
+</div>
+
+{% endblock content %}
